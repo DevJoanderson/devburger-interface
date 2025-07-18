@@ -46,7 +46,7 @@ export const RightContainer = styled.div`
 
     a {
       text-decoration: underline;
-      color: #7b308cff;
+      color: #9758a6;
     }
   }
 `;
@@ -57,7 +57,8 @@ export const Title = styled.h2`
   color: #fff;
 
   span {
-    color: #7b308cff;
+    color: #9758a6;
+    font-family: 'Road Rage', sans-serif;
   }
 `;
 
@@ -98,5 +99,3 @@ export const InputContainer = styled.div`
     height: 10px;
   }
 `;
-
-export const Button = styled.button``;

@@ -1,6 +1,6 @@
 import Logo from '../../assets/logo.png';
+import { Button } from '../../components/Button';
 import {
-  Button,
   Container,
   Form,
   InputContainer,

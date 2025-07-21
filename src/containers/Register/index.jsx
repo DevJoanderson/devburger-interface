@@ -46,22 +46,34 @@ export function Register() {
   console.log(errors);
 
   const onSubmit = async (data) => {
-    const response = await toast.promise(
-      api.post('/users', {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      }),
+    try {
+      const { status, data: responseData } = await api.post(
+        '/users',
+        {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        },
+        {
+          validateStatus: () => true,
+        },
+      );
 
-      {
-        pending: 'Verificando seus dados...',
-        success: 'Cadastro realizado com Sucesso!',
-        error: 'Ops, algo deu errado! Tente novamente.',
-      },
-    );
+      if (status === 201) {
+        toast.success('Cadastro realizado com sucesso!');
+      } else if (responseData?.error === 'User already exists') {
+        toast.warn('Email já está em uso!');
+      } else {
+        toast.error('Falha no sistema! Tente novamente.');
+      }
 
-    console.log(response);
+      console.log(status);
+    } catch (error) {
+      toast.error('Falha no sistema! Tente novamente.');
+      console.error(error);
+    }
   };
+
   return (
     <Container>
       <LeftContainer>

@@ -37,6 +37,7 @@ export default [
       'import-helpers': importHelpersPlugin,
       prettier: prettierPlugin, // <--- AQUI
     },
+    
 
     settings: {
       react: {
@@ -73,7 +74,13 @@ export default [
 
       'no-unused-vars': 'warn',
     },
-  },
+  },{
+  "env": {
+    "browser": true,
+    "es2021": true
+  }
+},
+
 
   prettier,
 ];

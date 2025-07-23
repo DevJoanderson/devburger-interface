@@ -1,8 +1,18 @@
+import { Container, Banner, Content } from './styles';
+
+
 export function Home() {
   return (
-    <div>
-      <h1>Página Inicial</h1>
-      <p>Você foi autenticado com sucesso!</p>
-    </div>
+    <main>
+      <Banner>
+        <h1>Bem-vindo(a)!</h1>
+      </Banner>
+      <Container>
+        <Content>
+          <div>Corrosel Categorias</div>
+          <div>Corrosel Categorias</div>
+        </Content>
+      </Container>
+    </main>
   );
 }

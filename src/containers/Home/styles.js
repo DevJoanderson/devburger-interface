@@ -25,6 +25,3 @@ url('${Background}');
 height: 100vh;
 `;
 
-export const Content = styled.div`
- padding-bottom: 70px;
-`;

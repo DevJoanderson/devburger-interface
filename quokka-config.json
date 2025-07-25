@@ -1,0 +1,8 @@
+{
+  "babel": true,
+  "env": {
+    "params": {
+      "runner": "node"
+    }
+  }
+}

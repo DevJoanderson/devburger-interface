@@ -9,6 +9,7 @@ export const ContainerButton = styled.button`
   font-size: 30px;
   color: #ffffff;
   
+  
 
   &:hover {
     background-color: #6f357c;

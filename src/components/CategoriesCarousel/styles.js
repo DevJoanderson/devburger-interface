@@ -1,11 +1,19 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+position: relative;
   .carousel-item{
     padding-right: 40px;
-
     padding-left: 40px;
   }
+  .react-multiple-carousel__arrow--left {
+    left: +50px;
+    top: 10px;
+}
+.react-multiple-carousel__arrow--right {
+    right: +50px;
+    top: 10px;
+}
 `;
 
 export const Title = styled.h2`
@@ -40,6 +48,7 @@ export const ContainerItems = styled.div`
  padding: 20px 10px;
  width: 100%;
  height: 300px;
+ 
 
  P {
    color: #ffffff;
@@ -51,3 +60,8 @@ export const ContainerItems = styled.div`
    margin-top: 50px;
  }
 `;
+export const CarouselWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  `;

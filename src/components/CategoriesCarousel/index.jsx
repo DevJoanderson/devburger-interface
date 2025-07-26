@@ -3,6 +3,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { api } from '../../services/api';
 import { Container, ContainerItems, Title, } from './styles'; // ou o caminho correto
+import { CarouselWrapper } from './styles';
 
 
 
@@ -38,6 +39,7 @@ export function CategoriesCarousel() {
     return(
         <Container>
             <Title>Categorias</Title>
+            <CarouselWrapper>
             <Carousel
               responsive={responsive}
               infinite={true}
@@ -50,6 +52,7 @@ export function CategoriesCarousel() {
                     </ContainerItems>
                 ))}
             </Carousel>
+            </CarouselWrapper>
         </Container>
     )
 }

@@ -1,44 +1,46 @@
 import styled from "styled-components";
 
+
+
 export const Container = styled.div`
- display: flex;
- flex-direction: column;
- align-items: center;
- gap: 40px;
- padding: 20px;
- border-radius: 10px;
- background-color: #ffffff;
- box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
- position: relative;
- 
- 
+  width: 100%;
+  max-width: 280px;         
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 50px 15px 15px 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  position: relative;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+`;
 
- div {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 5px;
-    cursor: grab;
 
-    
+export const CardInfo = styled.div`
+  width: 100%;
+  margin-top: 60px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
 
-    p {
-        font-size: 18px;
-        color: #ff8c05;
-        line-height: 20px;
-        font-weight: 700;
-        margin-top: 40px;
-    }
+  p {
+    font-size: 16px;
+    font-size: 18px;
+    color: #ff8c05;
+    font-weight: 700;
+    line-height: 1.2;
+  }
 
-    strong {
-        font-size: 22px;
-        color: #363636;
-        font-weight: 800;
-        line-height: 20px;
-    }
- }
+  strong {
+    font-size: 18px;
+    color: #363636;
+    font-weight: 800;
+    margin: 0;
+  }
 `;
 
 export const CardImage = styled.img`

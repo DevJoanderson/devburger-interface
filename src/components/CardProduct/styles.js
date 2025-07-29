@@ -20,7 +20,7 @@ export const Container = styled.div`
 
 export const CardInfo = styled.div`
   width: 100%;
-  margin-top: 60px; 
+  margin-top: 50px; 
   display: flex;
   flex-direction: column;
   align-items: center;

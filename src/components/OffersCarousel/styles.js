@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+   padding: 0 20px;
+   margin-top: -20px;
+   overflow-x: hidden;
+   max-width: 100%;
   .carousel-item{
     padding-right: 40px;
   }

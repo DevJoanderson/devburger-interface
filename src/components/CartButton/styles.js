@@ -8,8 +8,13 @@ export const ContainerButton = styled.button`
   border-radius: 5px;
   font-size: 30px;
   color: #ffffff;
-  
-  
+
+  display: flex;              
+  align-items: center;       
+  justify-content: center;    
+  gap: 8px;                  
+
+  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #6f357c;

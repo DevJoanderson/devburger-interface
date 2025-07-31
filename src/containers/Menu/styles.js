@@ -54,7 +54,7 @@ export const CategoryButton = styled(Link)`
 text-decoration: none;
 cursor: pointer;
 background: none;
-color: ${(props) => (props.$isActiveCategory ? '#9758a6' : '#9a9a9d')};
+color: ${(props) => (props.$isActiveCategory ? '#9758a6' : '#8a6630e0')};
 font-size: 24px;
 font-weight: 500;
 padding-bottom: 5px;
@@ -67,8 +67,8 @@ export const ProductsContainer = styled.div`
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 padding: 40px;
-gap: 60px;
+gap: 50px;
 justify-content: center;
 max-width: 1280px;
-margin: 50px auto;
+margin: 20px auto 40px auto;
 `;

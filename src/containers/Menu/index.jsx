@@ -22,6 +22,7 @@ export function Menu() {
   const { search } = useLocation();
 
   const queryParams = new URLSearchParams(search);
+  
 
   const [activeCategory, setActiveCategory] = useState(() => {
     const categoryId = +queryParams.get('categoria');

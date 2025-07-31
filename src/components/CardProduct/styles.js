@@ -1,13 +1,10 @@
 import styled from "styled-components";
 
-
-
 export const Container = styled.div`
-  width: 100%;
-  max-width: 280px;
+  max-width: 100%;
   background-color: #ffffff;
   border-radius: 10px;
-  padding: 100px 25px 25px 25px; 
+  padding: 100px 15px 15px 15px; 
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   position: relative;
 

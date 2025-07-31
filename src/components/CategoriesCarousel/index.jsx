@@ -6,8 +6,6 @@ import { CategoryButton, Container, ContainerItems, Title, } from './styles'; //
 import { CarouselWrapper } from './styles';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-
-
 export function CategoriesCarousel() {
     const [categories, setCategories] = useState([]);
     const navigate = useNavigate();
@@ -17,8 +15,7 @@ export function CategoriesCarousel() {
     const queryParams = new URLSearchParams(search);
 
     const categoryId = queryParams.get('categoria')
-   
-    
+     
 
     useEffect(() => {
      async function loadCategories() {

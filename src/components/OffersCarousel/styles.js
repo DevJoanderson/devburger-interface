@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
    padding: 0 20px;
-   margin-top: -20px;
+   margin-top: 50px;
    overflow-x: hidden;
    max-width: 100%;
   .carousel-item{
@@ -45,4 +45,3 @@ margin: 70px 0;
   left: calc(50% - 28px);
 }
 `;
-

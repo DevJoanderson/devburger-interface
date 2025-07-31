@@ -3,6 +3,8 @@ import { set } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CardProduct } from '../../components/CardProduct';
 import { api } from '../../services/api';
+import { BackButton } from '../../components/BackButton';
+
 import { formatPrice } from '../../utils/formatPrice';
 import {
   Banner,
@@ -16,7 +18,7 @@ export function Menu() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-
+  
   const navigate = useNavigate();
 
   const { search } = useLocation();
@@ -78,6 +80,10 @@ export function Menu() {
           <span>Esse cardápio está irresistível!</span>
         </h1>
       </Banner>
+         <Container>
+      <BackButton />
+           ...
+      </Container>
       <CategoryMenu>
         {categories.map((category) => (
           <CategoryButton
@@ -100,7 +106,6 @@ export function Menu() {
           </CategoryButton>
         ))}
       </CategoryMenu>
-
       <ProductsContainer>
         {filteredProducts.map((product) => (
           <CardProduct key={product.id} product={product} />

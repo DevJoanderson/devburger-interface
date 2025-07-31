@@ -33,7 +33,7 @@ export const Banner = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
-height: 480px;
+height: 700px;
 width: 100%;
 position: relative;
 
@@ -47,7 +47,7 @@ export const CategoryMenu = styled.div`
 display: flex;
 justify-content: center;
 gap: 50px;
-margin-top: 30px;
+
 `;
 
 export const CategoryButton = styled(Link)`
@@ -59,6 +59,7 @@ font-size: 24px;
 font-weight: 500;
 padding-bottom: 5px;
 line-height: 20px;
+margin-top: -46%;
 border: none;
 border-bottom: ${(props) => props.$isActiveCategory && '3px solid #696969'};
 `;
@@ -66,9 +67,10 @@ border-bottom: ${(props) => props.$isActiveCategory && '3px solid #696969'};
 export const ProductsContainer = styled.div`
 display: grid;
 grid-template-columns: repeat(3, 1fr);
-padding: 40px;
-gap: 50px;
+padding: -20px;
+gap: 70px;
 justify-content: center;
 max-width: 1280px;
-margin: 20px auto 40px auto;
+margin: 60px auto 60px auto;
+margin-top: -42%;
 `;

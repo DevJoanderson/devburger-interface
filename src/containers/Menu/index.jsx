@@ -3,8 +3,6 @@ import { set } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CardProduct } from '../../components/CardProduct';
 import { api } from '../../services/api';
-import { BackButton } from '../../components/BackButton';
-
 import { formatPrice } from '../../utils/formatPrice';
 import {
   Banner,
@@ -18,13 +16,12 @@ export function Menu() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  
+
   const navigate = useNavigate();
 
   const { search } = useLocation();
 
   const queryParams = new URLSearchParams(search);
-  
 
   const [activeCategory, setActiveCategory] = useState(() => {
     const categoryId = +queryParams.get('categoria');
@@ -64,6 +61,7 @@ export function Menu() {
       const newFilteredProducts = products.filter(
         (product) => product.category_id === activeCategory,
       );
+
       setFilteredProducts(newFilteredProducts);
     }
   }, [products, activeCategory]);
@@ -80,15 +78,11 @@ export function Menu() {
           <span>Esse cardápio está irresistível!</span>
         </h1>
       </Banner>
-         <Container>
-      <BackButton />
-           ...
-      </Container>
       <CategoryMenu>
         {categories.map((category) => (
           <CategoryButton
             key={category.id}
-            $isActiveCategory={category.id === activeCategory}
+            $isActiveCategory={category.id === activeCategory} //Utilizar o sinal $ ao início da propriedade que será utilizada somente pelo styled components
             onClick={() => {
               navigate(
                 {
@@ -106,6 +100,7 @@ export function Menu() {
           </CategoryButton>
         ))}
       </CategoryMenu>
+
       <ProductsContainer>
         {filteredProducts.map((product) => (
           <CardProduct key={product.id} product={product} />

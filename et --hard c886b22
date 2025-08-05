@@ -1,0 +1,27 @@
+[33m076b5cb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m feat: Criação do primeiro contexto
+[33m2bab65d[m feat: Adicionei o botão de volta na tela de menu, e criei um novo componentbutton
+[33mbef5fdf[m feat: Finalizando a tela de categorias -pt3
+[33m57124d1[m feat: Adicionando as sobrimesas no beekeeper manualmente
+[33mcae3e99[m feat: Montando a tela de categorias
+[33mf84b03e[m feat: Criando o Menu
+[33m850c363[m feat: filtrando os itens
+[33me4ee3de[m feat: Montando o CSS do segundo carrossel
+[33mdf322c6[m feat: Adicionando o segundo carrossel
+[33me246b12[m feat: Montando o carroussel
+[33mfed5fe3[m feat: Revisando os dados e guardando informações no local storage
+[33m903d6e6[m feat: criando os carrosséis
+[33mf29bdfb[m feat: Alteração no eslint para para de da erro, e Criação da tela Home
+[33mcc73fc8[m feat: Cuidando da Navegação entre as Telas login, registe e home
+[33m95e46ee[m feat: mostrar alerta quando email já estiver cadastrado
+[33me43c8c3[m chore: Criação da Tela de Cadastro
+[33m34b0c98[m chore: Criando rotiamento para as telas com React Router
+[33m018a5a3[m chore: Personalizando a notificação de entrada com o React Toastfy
+[33m1894b8b[m chore: Conectando API com o Frontend
+[33md22fac5[m chore: Finalizando a tela de Login
+[33maa5dcae[m chore: Validando o formulário de Login
+[33m6589ce2[m chore: Adicionando formulário com React Hook Form
+[33m65511f8[m chore: Adicionei as fontes e o botão na tela de Login
+[33m3d4ae59[m chore: Estilização da tela de Login
+[33m0ae9e8b[m chore: iniciando a tela de Login
+[33m70cd880[m chore: adiciona configuração do styled-components e define estilos globais da aplicação
+[33mc886b22[m chore: inicia projeto com a estrutura base e organização das pastas

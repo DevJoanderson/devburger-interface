@@ -1,10 +1,11 @@
 import Cart from '../../assets/Carts.svg';
 import { ContainerButton } from './styles';
 
-export function CartButton({ onClick }) {
+export function CartButton({ children, ...rest }) {
   return (
-    <ContainerButton onClick={onClick}>
+    <ContainerButton {...rest}>
       <img src={Cart} alt="carrinho-de-compras" />
+      {children}
     </ContainerButton>
   );
 }

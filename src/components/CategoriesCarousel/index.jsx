@@ -55,7 +55,7 @@ export function CategoriesCarousel() {
         // autoPlaySpeed={5000}
       >
         {categories.map((category) => (
-          <ContainerItems key={category.id} imageUrl={category.url}>
+          <ContainerItems key={category.id} $imageUrl={category.url}>
             <CategoryButton
               onClick={() => {
                 navigate({

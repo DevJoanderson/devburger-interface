@@ -6,6 +6,7 @@ import * as yup from 'yup';
 
 import Logo from '../../assets/logo.svg';
 import { Button } from '../../components/Button';
+import { useUser } from '../../hooks/UserContext';
 import { api } from '../../services/api';
 import {
   Container,
@@ -19,7 +20,7 @@ import {
 
 export function Login() {
   const navigate = useNavigate();
-
+  const { putUserData} = useUser();
   const schema = yup.object({
     email: yup
       .string()
@@ -39,38 +40,48 @@ export function Login() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (formData) => {
-    try {
-      const response = await toast.promise(
-        api.post('/session', {
-          email: formData.email,
-          password: formData.password,
-        }),
-        {
-          pending: 'Verificando seus dados...',
-          success: 'Seja bem-vindo(a)!',
-          error: 'Email ou senha incorretos!',
-        }
-      );
-
-      const { token, user } = response.data;
-
-      console.log('Token recebido:', token);
-      console.log('Usuário recebido:', user);
-
-      if (token && user) {
-        localStorage.setItem('token', token);
-        localStorage.setItem('devburgerUserData', JSON.stringify(user));
-        console.log('Token e usuário salvos com sucesso.');
-        navigate('/');
-      } else {
-        toast.error('Token ou dados de usuário ausentes na resposta.');
-        console.error('Token ou usuário não retornado corretamente');
+ const onSubmit = async (formData) => {
+  try {
+    const response = await toast.promise(
+      api.post('/session', {
+        email: formData.email,
+        password: formData.password,
+      }),
+      {
+        pending: 'Verificando seus dados...',
+        success: 'Seja bem-vindo(a)!',
+        error: 'Email ou senha incorretos!',
       }
-    } catch (err) {
-      console.error('Erro na requisição de login:', err);
-    }
+    );
+
+    const { token, user } = response.data;
+
+   if (token && user) {
+  // monta o objeto do usuário já com o token
+  const userData = { 
+    ...user, 
+    token 
   };
+
+  // salva dos dois jeitos (igual ao professor)
+  localStorage.setItem('token', token); // token separado
+  localStorage.setItem('devburger:userData', JSON.stringify(userData)); // user + token
+
+  // atualiza o contexto com tudo (inclui token)
+  putUserData(userData);
+
+  console.log('Token e usuário salvos com sucesso.');
+  navigate('/');
+} else {
+  toast.error('Token ou dados de usuário ausentes na resposta.');
+  console.error('Token ou usuário não retornado corretamente');
+}
+} catch (err) {
+    console.error('Erro na requisição de login:', err);
+  }
+};
+  
+
 
   return (
     <Container>

@@ -10,18 +10,23 @@ export const UserProvider = ({ children }) => {
 
     localStorage.setItem('devburger:userData', JSON.stringify(userInfo));
   }
-   useEffect(() => {
-    const userData = localStorage.getItem('devburger:userData');
 
-    if (userData) {
-      setUserInfo(JSON.parse(userData));
+  const logout = () => {
+    setUserInfo({})
+    localStorage.removeItem('devburger:userData')
+  }
+   useEffect(() => {
+    const userInfoLocalStorage = localStorage.getItem('devburger:userData');
+
+    if (userInfoLocalStorage) {
+      setUserInfo(JSON.parse(userInfoLocalStorage));
     }
   }, []);
 
   console.log('UserProvider carregado');
 
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, putUserData }}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, putUserData, logout, }}>
       {children}
     </UserContext.Provider>
   );

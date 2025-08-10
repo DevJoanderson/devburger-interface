@@ -4,12 +4,9 @@ import { Container, Banner } from './styles';
 import { useUser } from '../../hooks/UserContext';
 
 export function Home() {
-  console.log('Home carregou');
 
   const { userInfo } = useUser();
   const { id, name } = userInfo;
-
-  console.log('UserContext:', id, name);
 
   return (
     <main>

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { CardProduct } from '../../components/CardProduct';
 import { api } from '../../services/api';
 import { formatPrice } from '../../utils/formatPrice';
+import { BackButton } from '../../components/BackButton';
 import {
   Banner,
   CategoryButton,
@@ -68,6 +69,7 @@ export function Menu() {
 
   return (
     <Container>
+       <BackButton />
       <Banner>
         <h1>
           O MELHOR
@@ -82,7 +84,7 @@ export function Menu() {
         {categories.map((category) => (
           <CategoryButton
             key={category.id}
-            $isActiveCategory={category.id === activeCategory} //Utilizar o sinal $ ao início da propriedade que será utilizada somente pelo styled components
+            $isActiveCategory={category.id === activeCategory}
             onClick={() => {
               navigate(
                 {

@@ -5,6 +5,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 import { CategoryButton, Container, ContainerItems, Title } from './styles';
+import { BackButton } from '../../components/BackButton';
 
 export function CategoriesCarousel() {
   const [categories, setCategories] = useState([]);
@@ -15,7 +16,7 @@ export function CategoriesCarousel() {
       const { data } = await api.get('/categories');
 
       setCategories(data);
-      console.log(data);
+     
     }
     loadCategories();
   }, []);
@@ -45,6 +46,7 @@ export function CategoriesCarousel() {
 
   return (
     <Container>
+      <BackButton />
       <Title>Categorias</Title>
       <Carousel
         responsive={responsive}

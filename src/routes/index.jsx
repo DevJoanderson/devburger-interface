@@ -4,39 +4,28 @@ import { Home } from '../containers/Home';
 import { Login } from '../containers/Login';
 import { Register } from '../containers/Register';
 import { Menu } from '../containers/Menu';
-import AppProvider from '../hooks';
+import { Header } from '../components/Header';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <AppProvider>
+      <>
+        <Header />
         <Home />
-      </AppProvider>
+      </>
     ),
   },
   {
     path: '/login',
-    element: (
-      <AppProvider>
-        <Login />
-      </AppProvider>
-    ),
+    element: <Login />,
   },
   {
     path: '/cadastro',
-    element: (
-      <AppProvider>
-        <Register />
-      </AppProvider>
-    ),
+    element: <Register />,
   },
   {
     path: '/cardapio',
-    element: (
-      <AppProvider>
-        <Menu />
-      </AppProvider>
-    ),
+    element: <Menu />,
   },
 ]);

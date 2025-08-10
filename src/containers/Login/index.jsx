@@ -44,7 +44,7 @@ export function Login() {
   const onSubmit = async ({ email, password }) => {
     try {
       const response = await toast.promise(
-        api.post('/session', { email, password }), // confirme se a rota é essa
+        api.post('/session', { email, password }),
         {
           pending: 'Verificando seus dados...',
           success: 'Seja bem-vindo(a)!',
@@ -52,7 +52,7 @@ export function Login() {
         }
       );
 
-      // confirme o formato da resposta do backend
+
       const { token, user } = response.data;
 
       if (!token || !user) {
@@ -61,20 +61,19 @@ export function Login() {
         return;
       }
 
-      // monta o objeto do usuário já com o token (compatível com seu api.js)
+
       const userData = { ...user, token };
 
-      // salva tudo no mesmo local
+
       localStorage.setItem('devburger:userData', JSON.stringify(userData));
 
-      // atualiza o contexto
+
       putUserData(userData);
 
       console.log('Token e usuário salvos com sucesso.');
       navigate('/');
     } catch (err) {
       console.error('Erro na requisição de login:', err);
-      // o toast de erro já é exibido pelo toast.promise
     }
   };
 

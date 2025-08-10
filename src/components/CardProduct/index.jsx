@@ -9,10 +9,10 @@ export function CardProduct({ product }) {
     const productIndex = cart.findIndex((item) => item.id === product.id);
 
     if (productIndex >= 0) {
-      // Produto já está no carrinho, aumenta a quantidade
+     
       cart[productIndex].quantity += 1;
     } else {
-      // Produto ainda não está no carrinho, adiciona com quantidade 1
+     
       cart.push({ ...product, quantity: 1 });
     }
 

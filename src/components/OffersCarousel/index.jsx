@@ -9,31 +9,19 @@ import { formatPrice } from '../../utils/formatPrice';
 export function OffersCarousel() {
   const [offers, setOffers] = useState([]);
 
-  useEffect(() => {
+   useEffect(() => {
     async function loadProducts() {
-      const token = localStorage.getItem('token');
+      const { data } = await api.get('/products');
 
-      if (!token) {
-        console.warn('Token não encontrado. Usuário não autenticado.');
-        return;
-      }
+      const onlyOffers = data
+        .filter((product) => product.offer)
+        .map((product) => ({
+          currencyValue: formatPrice(product.price),
+          ...product,
+        }));
 
-      try {
-        const { data } = await api.get('/products');
-
-        const onlyOffers = data
-          .filter((product) => product.offer)
-          .map((product) => ({
-            currencyValue: formatPrice(product.price),
-            ...product,
-          }));
-
-        setOffers(onlyOffers);
-      } catch (error) {
-        console.error('Erro ao buscar produtos com ofertas:', error);
-      }
+      setOffers(onlyOffers);
     }
-
     loadProducts();
   }, []);
 

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { CardImage, CardInfo, Container } from "./styles";
 import { CartButton } from "../CartButton";
+import { useCart } from "../../hooks/CartContext";
 
 export function CardProduct({ product }) {
   function putProductInCart(product) {
@@ -9,10 +10,10 @@ export function CardProduct({ product }) {
     const productIndex = cart.findIndex((item) => item.id === product.id);
 
     if (productIndex >= 0) {
-     
+
       cart[productIndex].quantity += 1;
     } else {
-     
+
       cart.push({ ...product, quantity: 1 });
     }
 

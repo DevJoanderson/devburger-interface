@@ -20,7 +20,7 @@ cursor: grab;
 `;
 
 export const Title = styled.h2`
-font-size: 32px;
+font-size: 36px;
 font-weight: 800;
 color: #9858a6;
 padding-bottom: 12px;

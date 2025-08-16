@@ -2,23 +2,22 @@ import PropTypes from "prop-types";
 import { CardImage, CardInfo, Container } from "./styles";
 import { CartButton } from "../CartButton";
 import { useCart } from "../../hooks/CartContext";
+import { toast } from "react-toastify"; // já tem ToastContainer no main
 
 export function CardProduct({ product }) {
-  function putProductInCart(product) {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const { putProductInCart } = useCart();
 
-    const productIndex = cart.findIndex((item) => item.id === product.id);
+  function handleAdd() {
+    // passe o objeto no shape que o contexto espera
+    putProductInCart({
+      id: product.id,
+      name: product.name,
+      url: product.url,
+      price: product.price, // garanta que exista no product
+      currencyValue: product.currencyValue, // ou calcule a partir de price
+    });
 
-    if (productIndex >= 0) {
-
-      cart[productIndex].quantity += 1;
-    } else {
-
-      cart.push({ ...product, quantity: 1 });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`${product.name} adicionado ao carrinho!`);
+    toast.success(`${product.name} adicionado ao carrinho!`);
   }
 
   return (
@@ -28,7 +27,7 @@ export function CardProduct({ product }) {
         <p>{product.name}</p>
         <strong>{product.currencyValue}</strong>
       </CardInfo>
-      <CartButton onClick={() => putProductInCart(product)} />
+      <CartButton onClick={handleAdd} />
     </Container>
   );
 }
@@ -38,6 +37,7 @@ CardProduct.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+    price: PropTypes.number,           // adicionei
     currencyValue: PropTypes.string.isRequired,
   }).isRequired,
 };

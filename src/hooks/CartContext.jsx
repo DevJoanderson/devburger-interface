@@ -1,82 +1,80 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
 
 const CartContext = createContext({});
+const CART_KEY = 'devburger:cartInfo';
 
 export function CartProvider({ children }) {
-  const [cartProducts, setCartProducts] = useState([]);
-
-  const putProductInCart = (product) => {
-    const cartIndex = cartProducts.findIndex((prd) => prd.id === product.id);
-
-    let newProductsInCart = [];
-
-    if (cartIndex >= 0) {
-      newProductsInCart = cartProducts;
-
-      newProductsInCart[cartIndex].quantity =
-        newProductsInCart[cartIndex].quantity + 1;
-
-      setCartProducts(newProductsInCart)
-    } else {
-      product.quantity = 1
-      newProductsInCart = [...cartProducts, product];
-
-      setCartProducts(newProductsInCart);
+  // Hidrata do localStorage na criação
+  const [cartProducts, setCartProducts] = useState(() => {
+    try {
+      const raw = localStorage.getItem(CART_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
     }
-    updateLocalStorage(newProductsInCart);
-  }
+  });
 
-  const clearCart = (productId) => {
-    setCartProducts({});
-
-    updateLocalStorage({});
-  }
-
-  const deleteProducts = (productId) => {
-    const newCart = cartProducts.filter((prd) => prd.id === productId);
-
-
-    setCartProducts(newCart);
-    updateLocalStorage(newCart);
-  }
-
-  const increaseProducts = (productId) => {
-    const newCart = cartProducts.map((prd) => {
-      return prd.id === productId ? { ...prd, quantity: prd.quantity + 1 } : prd
-
+  // Helper para salvar estado + localStorage SEM mutar
+  const save = (updater) => {
+    setCartProducts((prev) => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      localStorage.setItem(CART_KEY, JSON.stringify(next));
+      return next;
     });
-    setCartProducts(newCart);
-    updateLocalStorage(newCart);
-  }
+  };
 
-  const descreaseProducts = (productId) => {
-    const cartIndex = cartProducts.findIndex((prd) => prd.id === productId);
+  const putProductInCart = useCallback((product) => {
+    save((prev) => {
+      const idx = prev.findIndex((p) => p.id === product.id);
+      if (idx >= 0) {
+        // cria novos objetos/array
+        return prev.map((p, i) =>
+          i === idx ? { ...p, quantity: p.quantity + 1 } : p
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+  }, []);
 
+  const clearCart = useCallback(() => save([]), []);
 
-    if (cartProducts[cartIndex].quantity > 1) {
-      const newCart = cartProducts.map((prd) => {
-        return prd.id === productId ? { ...prd, quantity: prd.quantity - 1 } : prd
+  const deleteProduct = useCallback((productId) => {
+    save((prev) => prev.filter((p) => p.id !== productId)); // REMOVE correto
+  }, []);
 
-      });
-      setCartProducts(newCart);
-      updateLocalStorage(newCart);
-    } else {
-      deleteProducts(productId)
-    }
-  }
-  const updateLocalStorage = (products) => {
-    localStorage.setItem('devburger:cartInfo', JSON.stringify(products))
-  }
+  const increaseProduct = useCallback((productId) => {
+    save((prev) =>
+      prev.map((p) =>
+        p.id === productId ? { ...p, quantity: p.quantity + 1 } : p
+      )
+    );
+  }, []);
 
-  useEffect(() => {
-    const clientCartData = localStorage.getItem('devburger:cartInfo');
-    if (clientCartData) {
-      setCartProducts(JSON.parse(clientCartData));
-    }
-  }, [])
+  const decreaseProduct = useCallback((productId) => {
+    save((prev) => {
+      const item = prev.find((p) => p.id === productId);
+      if (!item) return prev;
+      if (item.quantity > 1) {
+        return prev.map((p) =>
+          p.id === productId ? { ...p, quantity: p.quantity - 1 } : p
+        );
+      }
+      // se cair para 0, remove
+      return prev.filter((p) => p.id !== productId);
+    });
+  }, []);
 
   return (
-    <CartContext.Provider value={{ cartProducts, setCartProducts, putProductInCart, clearCart, deleteProducts, increaseProducts, descreaseProducts }}>
+    <CartContext.Provider
+      value={{
+        cartProducts,
+        putProductInCart,
+        clearCart,
+        deleteProduct,
+        increaseProduct,
+        decreaseProduct,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
@@ -84,5 +82,4 @@ export function CartProvider({ children }) {
 
 export function useCart() {
   return useContext(CartContext);
-
 }

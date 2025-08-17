@@ -1,7 +1,13 @@
 import { Table } from '../index';
+import { ProductImage, ButtonGroup } from './styles';
+
 import { useCart } from '../../hooks/CartContext';
+// src/components/CartItems/index.jsx
+import { formatPrice } from '../../utils/formatPrice';
+
+
 export function CartItems() {
-    const { cartProducts, decreseProduct, increaseProduct } = useCart();
+    const { cartProducts, decreaseProduct, increaseProduct } = useCart();
 
     console.log(cartProducts);
     return (
@@ -19,11 +25,18 @@ export function CartItems() {
                 {cartProducts?.length ? (
                     cartProducts.map((product) => (
                         <Table.Tr key={product.id}>
-                            <Table.Td><img src={product.url} alt={product.name} /></Table.Td>
+                            <Table.Td><ProductImage src={product.url} alt={product.name} /></Table.Td>
                             <Table.Td>{product.name}</Table.Td>
                             <Table.Td>{product.currencyValue}</Table.Td>
-                            <Table.Td>{product.quantity}</Table.Td>
-                            <Table.Td>{/* total */}</Table.Td>
+                            <Table.Td>
+                                <ButtonGroup>
+                                    <button onClick={() => decreaseProduct(product.id)}>-</button>
+                                    {product.quantity}
+                                    <button onClick={() => increaseProduct(product.id)}>+</button>
+                                </ButtonGroup>
+
+                            </Table.Td>
+                            <Table.Td>{formatPrice(product.quantity * product.price)}</Table.Td>
                         </Table.Tr>
                     ))
                 ) : (

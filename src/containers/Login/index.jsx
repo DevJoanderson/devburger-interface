@@ -61,12 +61,9 @@ export function Login() {
         return;
       }
 
-
       const userData = { ...user, token };
 
-
       localStorage.setItem('devburger:userData', JSON.stringify(userData));
-
 
       putUserData(userData);
 

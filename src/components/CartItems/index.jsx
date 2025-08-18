@@ -1,15 +1,12 @@
 import { Table } from '../index';
-import { ProductImage, ButtonGroup } from './styles';
-
-import { useCart } from '../../hooks/CartContext';
-// src/components/CartItems/index.jsx
+import { ProductImage, ButtonGroup, TrashImage } from './styles';
+import TrashIcon from "../../assets/trash.svg";
 import { formatPrice } from '../../utils/formatPrice';
-
+import { useCart } from '../../hooks/CartContext';
 
 export function CartItems() {
-    const { cartProducts, decreaseProduct, increaseProduct } = useCart();
+    const { cartProducts, decreaseProduct, increaseProduct, deleteProduct } = useCart();
 
-    console.log(cartProducts);
     return (
         <Table.Root>
             <Table.Header>
@@ -19,6 +16,7 @@ export function CartItems() {
                     <Table.Th>Preços</Table.Th>
                     <Table.Th>Quantidade</Table.Th>
                     <Table.Th>Total</Table.Th>
+                    <Table.Th></Table.Th>
                 </Table.Tr>
             </Table.Header>
             <Table.Body>
@@ -34,9 +32,11 @@ export function CartItems() {
                                     {product.quantity}
                                     <button onClick={() => increaseProduct(product.id)}>+</button>
                                 </ButtonGroup>
-
                             </Table.Td>
                             <Table.Td>{formatPrice(product.quantity * product.price)}</Table.Td>
+                            <Table.Td>
+                                <TrashImage src={TrashIcon} alt='Lixeira' onClick={() => deleteProduct(product.id)}></TrashImage>
+                            </Table.Td>
                         </Table.Tr>
                     ))
                 ) : (

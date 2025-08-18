@@ -46,7 +46,7 @@ export const Title = styled.div`
 
 export const Content = styled.div`
   display: grid;
-  grid-template-columns: 1fr 20%;
+  grid-template-columns: 1fr 30%;
   width: 100%;
   gap: 40px;
   max-width: 1280px;
@@ -54,6 +54,3 @@ export const Content = styled.div`
   margin: 0 auto;
 `;
 
-export const CartItems = styled.div``;
-
-export const CartResume = styled.div``;

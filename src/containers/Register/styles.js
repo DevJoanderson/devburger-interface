@@ -1,7 +1,5 @@
 import { Link as ReactLink } from 'react-router-dom';
-
 import styled from 'styled-components';
-
 import BackgroundLogin from '../../assets/background-login.svg';
 import Background from '../../assets/background.svg';
 

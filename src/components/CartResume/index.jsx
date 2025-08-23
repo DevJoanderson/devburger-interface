@@ -34,49 +34,34 @@ export function CartResume() {
     const submitOrder = async () => {
         if (isLoading) return;
         setIsLoading(true);
-
         try {
             if (!cartProducts.length) {
                 toast.error("Carrinho vazio");
                 return;
             }
 
-            // Enviar price em REAIS
             const products = cartProducts.map((p) => ({
                 id: Number(p.id),
                 quantity: Number(p.quantity),
-                price: Number(String(p.price).replace(/\./g, "").replace(",", ".")),
+                // ajuste aqui conforme a convenção escolhida:
+                // price: Number(p.price),            // REAIS
+                price: Math.round(Number(p.price) * 100), // CENTAVOS
             }));
 
-            console.log("payload /create-payment-intent:", { products });
-
-            // ✅ 1) faz a requisição
             const { data, status } = await api.post(
                 "/create-payment-intent",
                 { products },
                 { validateStatus: () => true }
             );
 
-            // ✅ 2) checa sucesso e extrai o clientSecret
             if (status >= 200 && status < 300) {
                 const clientSecret = data?.clientSecret || data?.client_secret;
                 if (!clientSecret) {
                     toast.error("Resposta sem clientSecret.");
                     return;
                 }
-
                 toast.success("Pedido criado! (clientSecret recebido)");
-
-                // ✅ 3) navega para /checkout levando os dados necessários
-                navigate("/checkout", {
-                    state: {
-                        clientSecret,
-                        amountCents: totalCents,     // seu total já em centavos (itens + entrega)
-                        items: products,             // se quiser reusar lá
-                    },
-                });
-
-                // (não limpe o carrinho aqui; faça isso só após o pagamento aprovado)
+                // confirmar pagamento aqui
             } else {
                 const msg =
                     (Array.isArray(data?.error) && data.error.join(" | ")) ||

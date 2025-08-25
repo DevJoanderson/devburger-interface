@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { set } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CardProduct } from '../../components/CardProduct';
-import { api } from '../../services/api';
+import api from '../../services/api';
 import { formatPrice } from '../../utils/formatPrice';
 import { BackButton } from '../../components/BackButton';
 import {
@@ -69,7 +69,7 @@ export function Menu() {
 
   return (
     <Container>
-       <BackButton />
+      <BackButton />
       <Banner>
         <h1>
           O MELHOR

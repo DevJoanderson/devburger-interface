@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled(Link)`
-  background-color: #9758a6;
-  color: #fff;
+  background-color: ${(props) => props.theme.purple};
+  color: ${(props) => props.theme. white};
   padding: 10px 20px;
   border-radius: 5px;
   font-weight: bold;

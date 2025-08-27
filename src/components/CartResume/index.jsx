@@ -2,28 +2,24 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../hooks/CartContext";
-import api from "../../services/api";
+import { api } from "../../services/api"; // ajusta o caminho relativo conforme a pasta
 import { formatPrice } from "../../utils/formatPrice";
 import { Button } from "../Button";
 import { Container } from "./styles";
 
 export function CartResume() {
-    // trabalharemos 100% em CENTAVOS
     const [itemsTotalCents, setItemsTotalCents] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
-    // 500 = R$ 5,00 (centavos)
-    const deliveryTaxCents = 500;
-
+    const deliveryTaxCents = 500; // R$ 5,00
     const navigate = useNavigate();
-    const { cartProducts = [], clearCart } = useCart();
+    const { cartProducts = [] } = useCart();
 
     useEffect(() => {
         const total = cartProducts.reduce((acc, current) => {
-            const price = Number(current?.price ?? 0);     // preço em reais no produto
+            const price = Number(current?.price ?? 0); // preço em reais
             const qty = Number(current?.quantity ?? 0);
-            // converte para centavos e acumula
-            return acc + Math.round(price * 100) * qty;
+            return acc + Math.round(price * 100) * qty; // converte pra centavos
         }, 0);
         setItemsTotalCents(total);
     }, [cartProducts]);
@@ -43,8 +39,6 @@ export function CartResume() {
             const products = cartProducts.map((p) => ({
                 id: Number(p.id),
                 quantity: Number(p.quantity),
-                // ajuste aqui conforme a convenção escolhida:
-                // price: Number(p.price),            // REAIS
                 price: Math.round(Number(p.price) * 100), // CENTAVOS
             }));
 
@@ -60,8 +54,8 @@ export function CartResume() {
                     toast.error("Resposta sem clientSecret.");
                     return;
                 }
-                toast.success("Pedido criado! (clientSecret recebido)");
-                // confirmar pagamento aqui
+                toast.success("Pedido criado! Redirecionando...");
+                navigate("/checkout", { state: { clientSecret } });
             } else {
                 const msg =
                     (Array.isArray(data?.error) && data.error.join(" | ")) ||
@@ -77,8 +71,6 @@ export function CartResume() {
             setIsLoading(false);
         }
     };
-
-
 
     return (
         <div>
@@ -100,7 +92,11 @@ export function CartResume() {
                 </div>
             </Container>
 
-            <Button type="button" onClick={submitOrder} disabled={isLoading || isEmpty}>
+            <Button
+                type="button"
+                onClick={submitOrder}
+                disabled={isLoading || isEmpty}
+            >
                 {isLoading ? "Processando..." : "Finalizar Pedido"}
             </Button>
         </div>

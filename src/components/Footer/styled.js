@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
- background-color: #5C2669;
+ background-color: ${(props) => props.theme.darkPurple};
  height: 50px;
  width: 100vw;
  display: flex;
@@ -10,7 +10,7 @@ export const Container = styled.div`
  display: center;
 
  p {
-    color: #fff;
+    color: ${(props) => props.theme. white};
     font-size: 14px;
     font-weight: align;
        

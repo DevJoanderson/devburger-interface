@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import api from '../../services/api';
+import { api } from "../../services/api"; // ajusta o caminho relativo conforme a pasta
 import { Container, Title } from './styles';
 import { CardProduct } from '../CardProduct';
 import { formatPrice } from '../../utils/formatPrice';

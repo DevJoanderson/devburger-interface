@@ -1,13 +1,20 @@
-import axios from 'axios';
+// src/services/api.js
+import axios from "axios";
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3001/',
+  baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3001",
 });
 
 api.interceptors.request.use((config) => {
-  const userData = localStorage.getItem('devburger:userData');
+  const row = localStorage.getItem("devburger:userData");
+  const token = row ? JSON.parse(row).token : null;
 
-  const token = userData && JSON.parse(userData).token;
-  config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    delete config.headers.Authorization;
+  }
+
   return config;
 });
+

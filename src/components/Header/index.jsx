@@ -1,14 +1,14 @@
-import { Container, HeaderLink, LinkContainer, Logaut, Navigation, Option, Profile, Content} from "./styles";
+import { Container, HeaderLink, LinkContainer, Logaut, Navigation, Option, Profile, Content } from "./styles";
 import { UserCircleIcon, ShoppingCartIcon } from "@phosphor-icons/react";
-import { useNavigate, useResolvedPath } from "react-router-dom"; 
+import { useNavigate, useResolvedPath } from "react-router-dom";
 import { useUser } from "../../hooks/UserContext";
 
 export function Header() {
     const navigate = useNavigate();
-  const { logout, userInfo} = useUser();
-    const { pathname} = useResolvedPath();
+    const { logout, userInfo } = useUser();
+    const { pathname } = useResolvedPath();
     function logoutUser() {
-      logout();
+        logout();
         navigate('/login');
     }
     return (
@@ -25,7 +25,7 @@ export function Header() {
                 </Navigation>
                 <Option>
                     <Profile>
-                        <UserCircleIcon color="#fff" size={24} />
+                        <UserCircleIcon color="${(props) => props.theme. white}" size={24} />
                         <div>
                             <p>
                                 Olá <span>{userInfo.name}</span>
@@ -33,12 +33,12 @@ export function Header() {
                             <Logaut onClick={logoutUser}>Sair</Logaut>
                         </div>
                     </Profile>
-                     <LinkContainer>
-                    <ShoppingCartIcon color="#fff" size={24} />
-                    <HeaderLink to="/carrinho">Carrinho</HeaderLink>
-                </LinkContainer>
+                    <LinkContainer>
+                        <ShoppingCartIcon color="${(props) => props.theme. white}" size={24} />
+                        <HeaderLink to="/carrinho">Carrinho</HeaderLink>
+                    </LinkContainer>
                 </Option>
-               
+
             </Content>
         </Container>
     )

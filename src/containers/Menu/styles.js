@@ -16,14 +16,14 @@ h1 {
   font-size: 80px;
   line-height: 65px;
   position: absolute;
-  color: #fff;
+  color: ${(props) => props.theme. white};
 
   right: 20%;
   top: 30%;
 
   span {
     display: block;
-    color: #fff;
+    color: ${(props) => props.theme. white};
     font-size: 20px;
     }
 }
@@ -38,7 +38,7 @@ width: 100%;
 position: relative;
 
 background:url('${BannerHamburger}') no-repeat;
-background-color: #1f1f1f;
+background-color: ${(props) => props.theme.mainBlack};
 background-position: center;
 background-size: cover;
 `;
@@ -54,13 +54,13 @@ export const CategoryButton = styled(Link)`
 text-decoration: none;
 cursor: pointer;
 background: none;
-color: ${(props) => (props.$isActiveCategory ? '#9758a6' : '#9a9a9d')};
+color: ${(props) => (props.$isActiveCategory ? (props) => props.theme.purple : '#9a9a9d')};
 font-size: 24px;
 font-weight: 500;
 padding-bottom: 5px;
 line-height: 20px;
 border: none;
-border-bottom: ${(props) => props.$isActiveCategory && '3px solid #696969'};
+border-bottom: ${(props) => props.$isActiveCategory && `3px solid ${(props) => props.theme.purple}`};
 `;
 
 export const ProductsContainer = styled.div`

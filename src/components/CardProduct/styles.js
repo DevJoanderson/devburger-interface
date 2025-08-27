@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   max-width: 100%;
-  background-color: #ffffff;
+  background-color: ${(props) => props.theme. white}fff;
   border-radius: 10px;
   padding: 100px 15px 15px 15px; 
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -36,14 +36,14 @@ export const CardInfo = styled.div`
   p {
     font-size: 16px;
     font-size: 18px;
-    color: #ff8c05;
+    color: ${(props) => props.theme.orange};
     font-weight: 700;
     line-height: 1.2;
   }
 
   strong {
     font-size: 18px;
-    color: #363636;
+    color: ${(props) => props.theme.black};
     font-weight: 800;
     margin: 0;
   }

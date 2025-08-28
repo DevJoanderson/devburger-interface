@@ -67,9 +67,15 @@ export function Login() {
       localStorage.setItem('devburger:userData', JSON.stringify(userData));
 
       putUserData(userData);
+      setTimeout(() => {
+        if (userData?.admin) {
+          navigate('/admin/home');
+        } else {
+          navigate('/');
+        }
+      }, 0);
 
-      console.log('Token e usuário salvos com sucesso.');
-      navigate('/');
+
     } catch (err) {
       console.error('Erro na requisição de login:', err);
     }

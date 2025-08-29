@@ -1,7 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
-import { Register, Login, Menu, Cart, Home, CompletePayment, Checkout, Admin } from '../containers';
+import { Register, Login, Menu, Cart, Home, CompletePayment, Checkout, Orders, EditProduct, NewProduct, Products, } from '../containers';
 import { UserLayout } from '../layouts/UserLayouts';
 import { AdminLayout } from '../layouts/AdminLayout';
+
+
 
 export function Router() {
   return (
@@ -14,9 +16,12 @@ export function Router() {
         <Route path="/complete" element={<CompletePayment />} />
       </Route>
 
+
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Admin />} />     {/* /admin */}
-        <Route path="home" element={<Admin />} /> {/* /admin/home */}
+        <Route path="/admin/pedidos" element={<Orders />}></Route>
+        <Route path="/admin/editar-produto" element={<EditProduct />}></Route>
+        <Route path="/admin/novo-produto" element={<NewProduct />}></Route>
+        <Route path="/admin/produtos" element={<Products />}></Route>
       </Route>
 
       <Route path="/login" element={<Login />} />

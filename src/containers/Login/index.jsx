@@ -69,7 +69,7 @@ export function Login() {
       putUserData(userData);
       setTimeout(() => {
         if (userData?.admin) {
-          navigate('/admin/home');
+          navigate('/admin/pedidos');
         } else {
           navigate('/');
         }

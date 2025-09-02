@@ -30,8 +30,8 @@ export function CategoriesCarousel() {
       <Carousel
         responsive={responsive}
         infinite
-        partialVisible={false}   // <- corrigido (era partialVisbile)
-        draggable={false}        // <- evita que o arrasto cancele o clique no desktop
+        partialVisible={false}   
+        draggable={false}        
         swipeable
         itemClass="carousel-item"
       >
@@ -39,7 +39,7 @@ export function CategoriesCarousel() {
           <ContainerItems key={category.id} $imageUrl={category.url}>
             <CategoryButton
               as={Link}
-              to={`/cardapio?categoria=${category.id}`}   // navegação robusta
+              to={`/cardapio?categoria=${category.id}`}  
             >
               {category.name}
             </CategoryButton>

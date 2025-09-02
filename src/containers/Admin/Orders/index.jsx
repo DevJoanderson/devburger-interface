@@ -11,11 +11,9 @@ import { api } from "../../../services/api";
 import { useEffect, useState } from 'react';
 
 
-
-
 export function Orders() {
-  const [orders, setOrders] = useState([]);
-  const [ rows, setRows] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [rows, setRows] = useState([]);
     useEffect(() => {
         async function loadOrders() {
             const { data } = await api.get('orders')
@@ -27,22 +25,29 @@ export function Orders() {
         loadOrders();
     }, [])
 
-    function createData(order) {
-    return {
-        name: order.user.name,
-        orderId: order._id,
-        date: order.createdAt,
-        status: order.status,
-        products: order.products,
-        
-      };
-}
-    
-   useEffect(() => {
-    const newRows = orders.map((order) => createData(order));
+    function getUserName(user) {
+        if (!user) return 'Cliente desconhecido';
+        if (typeof user === 'string') return 'Cliente desconhecido';
+        if (typeof user === 'object') return user.name ?? 'Cliente desconhecido';
+        return 'Cliente desconhecido';
+    }
 
-    setRows(newRows);
-   }, [orders])
+    function createData(order) {
+        return {
+            name: getUserName(order.user),
+            orderId: order._id,
+            date: order.createdAt,
+            status: order.status,
+            products: order.products,
+        };
+    }
+
+
+    useEffect(() => {
+        const newRows = orders.map((order) => createData(order));
+
+        setRows(newRows);
+    }, [orders])
 
     return (
         <TableContainer component={Paper}>
@@ -54,12 +59,17 @@ export function Orders() {
                         <TableCell>Cliente</TableCell>
                         <TableCell>Data do Pedido</TableCell>
                         <TableCell>Status</TableCell>
-                        
+
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <Row key={row._id} row={row} />
+                        <Row
+                            key={row.orderId}
+                            row={row}
+                            orders={orders}
+                            setOrders={setOrders}
+                        />
                     ))}
                 </TableBody>
             </Table>

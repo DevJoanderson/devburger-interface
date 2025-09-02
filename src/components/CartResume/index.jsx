@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../hooks/CartContext";
-import { api } from "../../services/api"; // ajusta o caminho relativo conforme a pasta
+import { api } from "../../services/api"; 
 import { formatPrice } from "../../utils/formatPrice";
 import { Button } from "../Button";
 import { Container } from "./styles";
@@ -11,15 +11,15 @@ export function CartResume() {
     const [itemsTotalCents, setItemsTotalCents] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
-    const deliveryTaxCents = 500; // R$ 5,00
+    const deliveryTaxCents = 500; 
     const navigate = useNavigate();
     const { cartProducts = [] } = useCart();
 
     useEffect(() => {
         const total = cartProducts.reduce((acc, current) => {
-            const price = Number(current?.price ?? 0); // preço em reais
+            const price = Number(current?.price ?? 0); 
             const qty = Number(current?.quantity ?? 0);
-            return acc + Math.round(price * 100) * qty; // converte pra centavos
+            return acc + Math.round(price * 100) * qty; 
         }, 0);
         setItemsTotalCents(total);
     }, [cartProducts]);
@@ -39,7 +39,7 @@ export function CartResume() {
             const products = cartProducts.map((p) => ({
                 id: Number(p.id),
                 quantity: Number(p.quantity),
-                price: Math.round(Number(p.price) * 100), // CENTAVOS
+                price: Math.round(Number(p.price) * 100),
             }));
 
             const { data, status } = await api.post(

@@ -12,7 +12,7 @@ export default function CheckoutForm() {
     const stripe = useStripe();
     const elements = useElements();
 
-    // ✅ Fallback seguro: não quebra se a página for recarregada sem state
+    
     const location = useLocation();
     const dpmCheckerLink = location?.state?.dpmCheckerLink ?? '#';
 
@@ -31,7 +31,7 @@ export default function CheckoutForm() {
 
         setIsLoading(true);
 
-        // Chama a função confirmPayment do Stripe
+      
         const { error, paymentIntent } = await stripe.confirmPayment({
             elements,
             redirect: 'if_required',
@@ -41,12 +41,12 @@ export default function CheckoutForm() {
             setMessage(error.message);
             toast.error(error.message);
         } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-            // Se o pagamento foi bem-sucedido, envia o pedido para o backend
+            
             try {
                 const products = cartProducts.map((product) => ({
                     id: product.id,
                     quantity: product.quantity,
-                    price: product.price, // certifique-se que está em CENTAVOS
+                    price: product.price, 
                 }));
 
                 const { status } = await api.post(
@@ -70,7 +70,7 @@ export default function CheckoutForm() {
                 toast.error('Falha no Sistema!, Tente novamente');
             }
         } else if (paymentIntent?.client_secret) {
-            // Outros status (ex.: requires_action) — segue para a tela de conclusão
+            
             navigate(`/complete?payment_intent_client_secret=${paymentIntent.client_secret}`);
         }
 

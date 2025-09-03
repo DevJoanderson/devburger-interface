@@ -1,4 +1,3 @@
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,7 +10,6 @@ import { api } from "../../../services/api";
 import { useEffect, useState } from 'react';
 import { orderStatusOptions } from './oderStatus';
 import { FilterOption, Filter } from './styles';
-
 
 export function Orders() {
     const [orders, setOrders] = useState([]);
@@ -39,17 +37,27 @@ export function Orders() {
         products: order.products,
     });
 
+    // Deriva "rows" a partir dos filtrados
     useEffect(() => {
         setRows(filteredOrders.map(createData));
     }, [filteredOrders]);
 
-    function handleStatus(status) {
-        setActiveStatus(status.id);
-        if (status.id === 0) {
+    //  Efeito correto no topo, reagindo a orders e activeStatus
+    useEffect(() => {
+        if (activeStatus === 0) {
             setFilteredOrders(orders);
         } else {
-            setFilteredOrders(orders.filter((o) => o.status === status.value));
+            const statusObj = orderStatusOptions.find((item) => item.id === activeStatus);
+            if (statusObj) {
+                setFilteredOrders(orders.filter((order) => order.status === statusObj.value));
+            } else {
+                setFilteredOrders(orders);
+            }
         }
+    }, [orders, activeStatus]);
+
+    function handleStatus(status) {
+        setActiveStatus(status.id);
     }
 
     return (

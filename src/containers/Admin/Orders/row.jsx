@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { useMemo, useState } from 'react';
-
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -12,43 +11,44 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
 import { api } from '../../../services/api';
 import { formatDate } from '../../../utils/formatDate';
 import { ProductImage, SelectStatus } from './styles';
 import { orderStatusOptions } from './oderStatus';
+export function Row({ row, setOrders, orders }) {
 
-export function Row({ row, orders, setOrders }) {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const [localStatus, setLocalStatus] = useState(row.status);
 
-
-    const selectedOption = useMemo(
-        () => orderStatusOptions.find((o) => o.value === localStatus) ?? null,
-        [localStatus]
-    );
 
     async function newStatusOrder(id, status) {
+
         try {
+
             setLoading(true);
 
-            const prev = localStatus;
-            setLocalStatus(status);
 
-            const { data: updated } = await api.put(`/orders/${id}`, { status });
+            await api.put(`/orders/${id}`, { status });
 
-            setOrders((prevOrders) =>
-                prevOrders.map((o) => (o._id === updated._id ? updated : o))
-            );
+
+            const newOrders = orders.map(order => order._id === id
+                ? { ...order, status }
+                : order
+            )
+            setOrders(newOrders);
+
+
         } catch (error) {
             console.error(error);
+        }
 
-            setLocalStatus((prev) => prev);
-        } finally {
+        finally {
+
             setLoading(false);
         }
+
+
     }
 
     return (
@@ -58,52 +58,53 @@ export function Row({ row, orders, setOrders }) {
                     <IconButton
                         aria-label="expand row"
                         size="small"
-                        onClick={() => setOpen((v) => !v)}
+                        onClick={() => setOpen(!open)}
                     >
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-
-                <TableCell>{row.orderId}</TableCell>
+                <TableCell component="th" scope="row">
+                    {row.orderId}
+                </TableCell>
                 <TableCell>{row.name}</TableCell>
-                <TableCell>{formatDate(row.date)}</TableCell>
-
+                <TableCell> {formatDate(row.date)}</TableCell>
                 <TableCell>
+
                     <SelectStatus
-                        options={orderStatusOptions.filter((s) => s.id !== 0)}
+                        options={orderStatusOptions.filter((status) => status.id !== 0)}
                         placeholder="Status"
-                        value={selectedOption}
-                        onChange={(opt) => newStatusOrder(row.orderId, opt.value)}
+                        defaultValue={orderStatusOptions.find((status) => status.value === row.status || null)}
+
+                        onChange={status => { newStatusOrder(row.orderId, status.value) }}
                         isLoading={loading}
-                        isDisabled={loading}
                         menuPortalTarget={document.body}
                     />
                 </TableCell>
             </TableRow>
-
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
                             <Typography variant="h6" gutterBottom component="div">
-                                Itens do pedido
+                                Pedido
                             </Typography>
-
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Quantidade</TableCell>
                                         <TableCell>Produto</TableCell>
-                                        <TableCell>Categoria</TableCell>
-                                        <TableCell>Imagem</TableCell>
+                                        <TableCell> Categoria</TableCell>
+                                        <TableCell>Imagem do Produto</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row.products?.map((product) => (
+                                    {row.products.map((product) => (
                                         <TableRow key={product.id}>
-                                            <TableCell>{product.quantity}</TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {product.id}
+                                            </TableCell>
                                             <TableCell>{product.name}</TableCell>
-                                            <TableCell>{product.category ?? '—'}</TableCell>
+                                            <TableCell >{product.category}</TableCell>
                                             <TableCell>
                                                 <ProductImage src={product.url} alt={product.name} />
                                             </TableCell>

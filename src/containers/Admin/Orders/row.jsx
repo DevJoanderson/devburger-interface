@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -12,20 +12,50 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { formatDate } from '../../../utils/formatDate';
 
-export function Row({ row }) {
+import { api } from '../../../services/api';
+import { formatDate } from '../../../utils/formatDate';
+import { ProductImage, SelectStatus } from './styles';
+import { orderStatusOptions } from './oderStatus';
+
+export function Row({ row, orders, setOrders }) {
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+
+    const selectedOption = useMemo(
+        () => orderStatusOptions.find((o) => o.value === row.status) ?? null,
+        [row.status]
+    );
+
+    async function newStatusOrder(id, status) {
+        try {
+            setLoading(true);
+
+
+            const { data: updated } = await api.put(`/orders/${id}`, { status });
+            const newOrders = orders.map(order => order._id == id ? { ...order, status } : order,)
+            setOrders(newOrders);
+            setOrders((prev) =>
+                prev.map((o) => (o._id === updated._id ? updated : o))
+            );
+        } catch (error) {
+            console.error(error);
+
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
 
-                <TableCell width={48}>
+                <TableCell>
                     <IconButton
                         aria-label="expand row"
                         size="small"
-                        onClick={() => setOpen(!open)}
+                        onClick={() => setOpen((v) => !v)}
                     >
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
@@ -41,7 +71,17 @@ export function Row({ row }) {
                 <TableCell>{formatDate(row.date)}</TableCell>
 
 
-                <TableCell>{row.status}</TableCell>
+                <TableCell>
+                    <SelectStatus
+                        options={orderStatusOptions.filter((s) => s.id !== 0)}
+                        placeholder="Status"
+                        value={selectedOption}
+                        onChange={(opt) => newStatusOrder(row.orderId, opt.value)}
+                        isLoading={loading}
+                        isDisabled={loading}
+                        menuPortalTarget={document.body}
+                    />
+                </TableCell>
             </TableRow>
 
 
@@ -69,11 +109,7 @@ export function Row({ row }) {
                                             <TableCell>{product.name}</TableCell>
                                             <TableCell>{product.category ?? '—'}</TableCell>
                                             <TableCell>
-                                                <img
-                                                    src={product.url}
-                                                    alt={product.name}
-                                                    style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: 8 }}
-                                                />
+                                                <ProductImage src={product.url} alt={product.name} />
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -88,6 +124,8 @@ export function Row({ row }) {
 }
 
 Row.propTypes = {
+    orders: PropTypes.array.isRequired,
+    setOrders: PropTypes.func.isRequired,
     row: PropTypes.shape({
         orderId: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,

@@ -22,26 +22,30 @@ export function Row({ row, orders, setOrders }) {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const [localStatus, setLocalStatus] = useState(row.status);
+
 
     const selectedOption = useMemo(
-        () => orderStatusOptions.find((o) => o.value === row.status) ?? null,
-        [row.status]
+        () => orderStatusOptions.find((o) => o.value === localStatus) ?? null,
+        [localStatus]
     );
 
     async function newStatusOrder(id, status) {
         try {
             setLoading(true);
 
+            const prev = localStatus;
+            setLocalStatus(status);
 
             const { data: updated } = await api.put(`/orders/${id}`, { status });
-            const newOrders = orders.map(order => order._id == id ? { ...order, status } : order,)
-            setOrders(newOrders);
-            setOrders((prev) =>
-                prev.map((o) => (o._id === updated._id ? updated : o))
+
+            setOrders((prevOrders) =>
+                prevOrders.map((o) => (o._id === updated._id ? updated : o))
             );
         } catch (error) {
             console.error(error);
 
+            setLocalStatus((prev) => prev);
         } finally {
             setLoading(false);
         }
@@ -50,7 +54,6 @@ export function Row({ row, orders, setOrders }) {
     return (
         <>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -61,15 +64,9 @@ export function Row({ row, orders, setOrders }) {
                     </IconButton>
                 </TableCell>
 
-
                 <TableCell>{row.orderId}</TableCell>
-
-
                 <TableCell>{row.name}</TableCell>
-
-
                 <TableCell>{formatDate(row.date)}</TableCell>
-
 
                 <TableCell>
                     <SelectStatus
@@ -83,7 +80,6 @@ export function Row({ row, orders, setOrders }) {
                     />
                 </TableCell>
             </TableRow>
-
 
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>

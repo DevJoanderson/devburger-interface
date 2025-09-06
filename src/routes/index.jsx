@@ -1,9 +1,19 @@
 import { Route, Routes } from 'react-router-dom';
-import { Register, Login, Menu, Cart, Home, CompletePayment, Checkout, Orders, EditProduct, NewProduct, Products, } from '../containers';
+import {
+  Register,
+  Login,
+  Menu,
+  Cart,
+  Home,
+  EditProduct,
+  CompletePayment,
+  Checkout,
+  Orders,
+  NewProduct,
+  Products,
+} from '../containers';
 import { UserLayout } from '../layouts/UserLayouts';
 import { AdminLayout } from '../layouts/AdminLayout';
-
-
 
 export function Router() {
   return (
@@ -16,7 +26,6 @@ export function Router() {
         <Route path="/complete" element={<CompletePayment />} />
       </Route>
 
-
       <Route path="/admin" element={<AdminLayout />}>
         <Route path="/admin/pedidos" element={<Orders />}></Route>
         <Route path="/admin/editar-produto" element={<EditProduct />}></Route>
@@ -26,8 +35,6 @@ export function Router() {
 
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro" element={<Register />} />
-
     </Routes>
-  )
+  );
 }
-

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-   padding: 0 20px;
-   margin-top: -25px;
-   overflow-x: hidden;
-   max-width: 100%;
-  .carousel-item{
+  padding: 0 20px;
+  margin-top: -25px;
+  overflow-x: hidden;
+  max-width: 100%;
+  .carousel-item {
     padding-right: 40px;
   }
   overflow-x: hidden;
@@ -13,36 +13,34 @@ export const Container = styled.div`
   .react-multi-carousel-list {
     overflow: visible;
   }
- .react-multiple-carousel__arrow--left {
-    left: 10px;
+  .react-multiple-carousel__arrow--left {
+    left: +10px;
     top: 10px;
-}
-.react-multiple-carousel__arrow--right {
+  }
+  .react-multiple-carousel__arrow--right {
     right: +50px;
     top: 10px;
-}
+  }
   padding-left: 40px;
 `;
 
 export const Title = styled.h2`
-font-size: 36px;
-font-weight: 800;
-color: ${(props) => props.theme. gren};
-padding-bottom: 12px;
-position: relative;
-text-align: center;
-top: -30px;
-margin: 70px 0;
+  font-size: 36px;
+  font-weight: 800;
+  color: ${(props) => props.theme.gren};
+  padding-bottom: 12px;
+  position: relative;
+  text-align: center;
+  top: -30px;
+  margin: 70px 0;
 
-
-
-&::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  width: 56px;
-  height: 4px;
-  background-color: ${(props) => props.theme. gren};
-  left: calc(50% - 28px);
-}
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 56px;
+    height: 4px;
+    background-color: ${(props) => props.theme.gren};
+    left: calc(50% - 28px);
+  }
 `;

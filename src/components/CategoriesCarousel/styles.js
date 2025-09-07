@@ -2,16 +2,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  /* garante que o carrossel fica acima de overlays anteriores */
   position: relative;
   isolation: isolate;
   z-index: 5;
 
   .carousel-item {
-    padding-right: 40px;    
+    padding-right: 40px;
   }
 
-  /* limita o hitbox das setas para não cobrir os cards */
   .react-multiple-carousel__arrow {
     width: 36px;
     height: 36px;
@@ -19,10 +17,11 @@ export const Container = styled.div`
   }
 
   .react-multiple-carousel__arrow--left {
-    left: 15px;
+    left: 10px;
     top: 10px;
   }
   .react-multiple-carousel__arrow--right {
+    right: 50px;
     top: 10px;
   }
 
@@ -64,8 +63,8 @@ export const ContainerItems = styled.div`
 `;
 
 export const CategoryButton = styled(Link)`
-  color: ${(props) => props.theme.white};  /* <- corrigido (sem espaço) */
-  background-color: rgba(0,0,0,0.5);
+  color: ${(props) => props.theme.white};
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 10px 30px;
   border-radius: 30px;
   font-size: 22.5px;

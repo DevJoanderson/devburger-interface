@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background-color: ${(props) => props.theme. white};
+  background-color: ${(props) => props.theme.white};
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -16,25 +16,24 @@ export const Container = styled.div`
 
   .container-top {
     display: grid;
-    grid-template-columns: 1fr max-content; /* texto | preço */
+    grid-template-columns: 1fr max-content;
     grid-row-gap: 10px;
     grid-template-areas:
       'title title'
       'items items-price'
       'delivery-tax delivery-tax-price';
 
-    /* zera margens padrão dos filhos imediatos (h2, p) */
-    > * { margin: 0; }
-
-    /* --- tudo que usa grid-area PRECISA ficar aqui dentro --- */
+    > * {
+      margin: 0;
+    }
 
     > .title {
       grid-area: title;
       font-size: 20px;
       font-weight: 700;
       margin-bottom: 20px;
-      background-color: #3b3b3b !important; /* força a cor */
-      color: ${(props) => props.theme. white} !important;
+      background-color: #3b3b3b !important;
+      color: ${(props) => props.theme.white} !important;
       width: 100%;
       padding: 15px;
       text-align: center;
@@ -74,6 +73,8 @@ export const Container = styled.div`
     margin-top: 24px;
     padding: 20px;
 
-    * { font-weight: 700; }
+    * {
+      font-weight: 700;
+    }
   }
 `;
